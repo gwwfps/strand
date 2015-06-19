@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -32,6 +33,7 @@ func main() {
 	handler := initSettings()
 
 	http.Handle("/", handler)
+	http.HandleFunc("/alive", handleAlive)
 
 	log.Printf("Listening on %s\n", handler.Address)
 
@@ -130,4 +132,8 @@ func (handler *RequestHandler) uploadFile(thread *Thread) error {
 	}
 
 	return nil
+}
+
+func handleAlive(w http.ResponseWriter, req *http.Request) {
+	io.WriteString(w, "Listening for requests.\n")
 }
