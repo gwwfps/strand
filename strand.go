@@ -32,8 +32,8 @@ type Thread struct {
 func main() {
 	handler := initSettings()
 
-	http.Handle("/", handler)
 	http.HandleFunc("/alive", handleAlive)
+	http.Handle("/command", handler)
 
 	log.Printf("Listening on %s\n", handler.Address)
 
